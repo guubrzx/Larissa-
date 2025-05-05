@@ -197,14 +197,36 @@ h1 {
   height: 60px; 
   animation: pulse 2s infinite; 
   z-index: 1;
+  fill: #8a2be2; /* Cor inicial (roxos) */
 }
 
 @keyframes pulse {
-  0% { transform: scale(1); opacity: 1; }
-  50% { transform: scale(1.2); opacity: 0.8; }
-  100% { transform: scale(1); opacity: 1; }
+  0% { 
+    transform: scale(1); 
+    opacity: 1;
+    fill: #8a2be2; /* Roxo inicial */
+  }
+  25% { 
+    transform: scale(1.2); 
+    opacity: 0.8;
+    fill: #9b4dca; /* Roxo médio */
+  }
+  50% { 
+    transform: scale(1); 
+    opacity: 1;
+    fill: #7e2ae8; /* Roxo mais intenso */
+  }
+  75% { 
+    transform: scale(1.2); 
+    opacity: 0.8;
+    fill: #c792ff; /* Lilás suave */
+  }
+  100% { 
+    transform: scale(1); 
+    opacity: 1;
+    fill: #8a2be2; /* Roxo inicial */
+  }
 }
-
 @media (max-width: 480px) {
   .btn, .close-btn {
     padding: 0.8rem 1.5rem;
