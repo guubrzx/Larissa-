@@ -1,343 +1,138 @@
-  
-<!DOCTYPE html>    
-<html lang="pt-br">    
-<head>    
-  <meta charset="UTF-8" />    
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>    
-  <title>Para Larissa</title>    
-  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Open+Sans:wght@300;600&display=swap" rel="stylesheet"/>    
-<style>    
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-html, body {
-  font-family: 'Open Sans', sans-serif;
-  background: radial-gradient(ellipse at center, #1b0033, #000);
-  color: #fff;
-  min-height: 100vh;
-  overflow-x: hidden;
-}
-
-body {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: 2rem;
-  position: relative;
-}
-
-.stars {
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  background: url('https://media.giphy.com/media/3ohs4BSacFKI7A717y/giphy.gif') repeat;
-  background-size: cover;
-  z-index: 0;
-  opacity: 0.15;
-  animation: floatStars 100s linear infinite;
-}
-
-@keyframes floatStars {
-  from { background-position: 0 0; }
-  to { background-position: 0 -3000px; }
-}
-
-h1 {
-  font-family: 'Great Vibes', cursive;
-  font-size: clamp(2.5rem, 6vw, 4.2rem);
-  margin-bottom: 1rem;
-  z-index: 2;
-  animation: fadeIn 2s ease-out forwards;
-  color: #d4a8ff;
-  text-shadow: 0 0 15px #8a2be2;
-}
-
-.main-text {
-  font-size: clamp(1rem, 2.5vw, 1.6rem);
-  max-width: 90vw;
-  z-index: 2;
-  color: #f0e6f6;
-  border-right: 2px solid #ff85c1;
-  white-space: nowrap;
-  overflow: hidden;
-  display: block;
-  animation: blink-caret 0.75s step-end infinite;
-}
-
-.main-text p {
-  display: inline;
-  white-space: nowrap;
-}
-
-.animate-done {
-  white-space: normal !important;
-  overflow: visible !important;
-}
-
-.main-text.animate-done p {
-  display: block !important;
-  white-space: normal !important;
-}
-
-@keyframes typing {
-  from { width: 0 }
-  to { width: 100% }
-}
-
-@keyframes blink-caret {
-  0%, 100% { border-color: transparent }
-  50% { border-color: #ff85c1; }
-}
-
-.btn {
-  margin-top: 20px;
-  padding: 1rem 3rem;
-  font-size: 1.2rem;
-  border-radius: 30px;
-  font-weight: bold;
-  cursor: pointer;
-  background: linear-gradient(45deg, #9b4dca, #7e2ae8); 
-  color: #fff;
-  border: none;
-  transition: 0.4s ease;
-  box-shadow: 0 0 15px rgba(155, 77, 202, 0.5);
-  z-index: 2;
-}
-
-.btn:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 30px #9b4dca, 0 0 30px #7e2ae8;
-}
-
-.close-btn {
-  background: #7e2ae8; 
-  border: none;
-  color: white;
-  padding: 1rem 2rem;
-  font-size: 1.2rem;
-  font-weight: bold;
-  border-radius: 30px;
-  cursor: pointer;
-  transition: 0.3s ease;
-  z-index: 2;
-}
-
-.close-btn:hover {
-  background: #9b4dca; 
-  transform: scale(1.05);
-}
-
-.modal {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.85);
-  justify-content: center;
-  align-items: center;
-  z-index: 999;
-  padding: 2rem;
-}
-
-.modal-content {
-  background: #2a2a3c;
-  padding: 2rem;
-  border-radius: 20px;
-  max-width: 600px;
-  width: 100%;
-  max-height: 80vh; 
-  overflow-y: auto;  
-  text-align: center;
-  box-shadow: 0 0 25px #a972f8; /* roxo neon suave */
-}
-
-.modal-content h2 {
-  font-family: 'Great Vibes', cursive;
-  font-size: clamp(2.2rem, 5vw, 3rem);
-  color: #c792ff; /* lilás claro */
-  margin-bottom: 1.5rem;
-  text-shadow: 0 0 10px #a972f8;
-}
-
-.modal-content p {
-  font-size: clamp(1.1rem, 2.5vw, 1.3rem);
-  line-height: 1.8;
-  color: #eee;
-  margin-bottom: 1rem;
-}
-
-.carta {
-  background: rgba(255, 255, 255, 0.1); 
-  border: 2px solid #b388eb; /* roxo claro (lavanda vibrante) */
-  border-radius: 20px;
-  padding: 2.5rem 2rem; 
-  text-align: center;
-  backdrop-filter: blur(10px); 
-  box-shadow: 0 0 25px rgba(179, 136, 235, 0.4); 
-  position: relative;
-  width: 90%; 
-  max-width: 500px; 
-  margin: 0 auto; 
-  transition: all 0.3s ease-in-out;
-}
-
-.carta:hover {
-  box-shadow: 0 0 40px rgba(179, 136, 235, 0.6); 
-}
-
-.heart-svg {
-  position: absolute;
-  top: 20px; 
-  right: 20px; 
-  width: 60px; 
-  height: 60px; 
-  animation: pulse 2s infinite; 
-  z-index: 1;
-  fill: #8a2be2; /* Cor inicial (roxos) */
-}
-
-@keyframes pulse {
-  0% { 
-    transform: scale(1); 
-    opacity: 1;
-    fill: #8a2be2; /* Roxo inicial */
-  }
-  25% { 
-    transform: scale(1.2); 
-    opacity: 0.8;
-    fill: #9b4dca; /* Roxo médio */
-  }
-  50% { 
-    transform: scale(1); 
-    opacity: 1;
-    fill: #7e2ae8; /* Roxo mais intenso */
-  }
-  75% { 
-    transform: scale(1.2); 
-    opacity: 0.8;
-    fill: #c792ff; /* Lilás suave */
-  }
-  100% { 
-    transform: scale(1); 
-    opacity: 1;
-    fill: #8a2be2; /* Roxo inicial */
-  }
-}
-@media (max-width: 480px) {
-  .btn, .close-btn {
-    padding: 0.8rem 1.5rem;
-    font-size: 0.9rem;
-  }
-
-  .modal-content {
-    padding: 1.2rem;
-  }
-
-  .main-text p {
-    font-size: 1rem !important;
-  }
-}
-.carta h2 {  
-  font-family: 'Great Vibes', cursive;  
-  font-size: 1.8rem;  
-  color: var(--verde-claro);  
-  margin-bottom: 1.5rem;  
-  }
-</style>
-</head>    
-<body>    
-    
-  <div class="stars"></div>    
-    
-  <h1>Para Larissa</h1>
-
-
-<div class="carta" id="carta">
-        <h2>Feliz aniversário, Princesa 🤍</h2>  
-  <p id="mensagem"></p>
-<button class="btn" onclick="openModal()">Te mostrar mais</button>    
-</div>
-
-
-    
-  <svg class="heart-svg" viewBox="0 0 24 24" fill="#7fffaa" xmlns="http://www.w3.org/2000/svg">    
-    <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5     
-    2 5.42 4.42 3 7.5 3c1.74 0 3.41 0.81     
-    4.5 2.09C13.09 3.81 14.76 3 16.5 3     
-    19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55     
-    11.54L12 21.35z"/>    
-  </svg>    
-    
-<div class="main-text">    
-  <p id="typedText" style="margin-top: 1rem; font-size: 1.2rem; color: #a0f0c5;"></p>    
-</div>    
-    
-  <div class="modal" id="modal">    
-    <div class="modal-content">    
-      <h2>Meu amor</h2>  
-
-  <p>Hoje é o seu dia, e eu só queria te lembrar o quanto é especial pra mim.</p>
-  <p>Não só pelo que você faz, mas pelo jeito que você é — inteira, nos detalhes.</p>
-  <p>Quando segura minha mão como se fosse seu lugar, ou quando deita no meu ombro e tudo parece se encaixar.</p>
-  <p>É nesses momentos simples que eu percebo o quanto sou sortudo.</p>
-
-  <p>Mesmo com alguns desentendimentos, uns dias mais difíceis ou palavras atravessadas, nada disso muda o que sinto por você.</p>
-  <p>Aliás, até nesses momentos eu percebo o quanto vale a pena — porque você é alguém que eu escolho, até nos dias nublados.</p>
-  <p>E o que temos é forte o bastante pra seguir em frente, com mais carinho, mais cuidado e mais verdade.</p>
-
-  <p>Tem algo em você que muda o clima ao redor.</p>
-  <p>Você tem presença, tem esse jeito de falar olhando nos olhos, de rir de um jeito que contagia…</p>
-  <p>E por mais que eu repare no que todo mundo vê — tua beleza, teu sorriso, teu jeito de andar — o que me prende mesmo é o que quase ninguém vê de verdade.</p>
-  <p>Teu cuidado nos gestos pequenos, tua calma quando tudo tá corrido, tua forma de fazer as coisas com carinho sem alarde.</p>
-
-  <p>Adoro te ver distraída, com aquele olhar calmo ou perdida nos teus pensamentos.</p>
-  <p>Você tem essa vibe boa que dá vontade de ficar perto.</p>
-  <p>É fácil gostar de ti — e ainda mais fácil sentir saudade quando você não tá.</p>
-
-  <p>Hoje eu só queria te desejar tudo de melhor, porque você merece o mundo — e mais um pouco.</p>
-  <p>E espero continuar aqui, sendo abrigo quando precisar, rindo contigo nas horas leves, e admirando tudo isso que você é… sem nem se esforçar.</p>
-
-  <footer>
-    Feliz aniversário, meu bem.<br>
-    Teu Schissl.
-  </footer>
-
-      <button class="close-btn" onclick="closeModal()">Fechar</button>    
-    </div>    
-  </div>        
-  <script>
-
-  const mensagem = "Hoje o dia é teu, mas quem comemora sou eu por ter alguém tão incrível do meu lado. Que teu novo ciclo seja leve, bonito e cheio de tudo que te faz sorrir.";
-  let i = 0;
-  const mensagemElement = document.getElementById("mensagem");
-
-  function escreverMensagem() {
-    if (i < mensagem.length) {
-      mensagemElement.innerHTML += mensagem.charAt(i);
-      i++;
-      setTimeout(escreverMensagem, 100);
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Contrato de Luxúria</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500&family=Rubik&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      background: linear-gradient(135deg, #1a1a1a, #000);
+      font-family: 'Rubik', sans-serif;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      padding: 30px;
     }
-  }
+    .box {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      padding: 40px;
+      max-width: 800px;
+      width: 100%;
+      box-shadow: 0 0 30px rgba(128, 0, 255, 0.3);
+      animation: slideIn 1s ease;
+    }
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.8rem;
+      text-align: center;
+      color: #b266ff;
+      margin-bottom: 25px;
+    }
+    h2 {
+      font-family: 'Playfair Display', serif;
+      color: #b266ff;
+      margin-top: 25px;
+      font-size: 1.4rem;
+    }
+    p {
+      font-size: 1.1rem;
+      margin-bottom: 20px;
+      line-height: 1.7;
+    }
+    .accept-btn {
+      display: inline-block;
+      background: #9900ff;
+      color: #fff;
+      border: none;
+      padding: 14px 35px;
+      border-radius: 40px;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .accept-btn:hover {
+      background: #7a00cc;
+      transform: scale(1.05);
+      box-shadow: 0 0 15px #9900ff80;
+    }
+    .accepted-text {
+      margin-top: 25px;
+      font-size: 1.3rem;
+      color: #00ff99;
+      text-align: center;
+      display: none;
+    }
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateY(40px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @media (max-width: 600px) {
+      h1 { font-size: 2rem; }
+      .box { padding: 25px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <h1>Contrato de Luxúria</h1>
+    <p>Ao aceitar este contrato, você entra em um acordo onde o toque, o desejo e o prazer são cláusulas obrigatórias.</p>
 
-  escreverMensagem();
+    <h2>1. Provocar é lei</h2>
+    <p>Provocações são permitidas a qualquer hora do dia. Pode vir com risadinha, com toque que começa de leve, com aquela olhada que já diz tudo. Se me deixar sem reação, ponto pra você. Se eu revidar melhor, ponto pra mim. Quem perder… paga com carinho.</p>
 
-  function openModal() {
-    const modal = document.getElementById("modal");
-    modal.style.display = "flex";
-    modal.classList.add("modal-show");
-  }
+    <h2>2. Malícia disfarçada de inocência</h2>
+    <p>Toda ideia lançada “só de brincadeira” vale como sugestão real. Se você inventar de prender algo em mim e disser “vai lá, me alcança se conseguir”… bom, saiba que eu vou. Com gosto.</p>
 
-  function closeModal() {
-    const modal = document.getElementById("modal");
-    modal.classList.remove("modal-show");
-    setTimeout(() => {
-      modal.style.display = "none";
-    }, 300);
-  }
-</script>
-</body>    
-</html>  
+    <h2>3. Toques com intenção</h2>
+    <p>Nada de toque bobo. Toda encostadinha, mão no pescoço, puxada de cintura, tem que vir com aquela intenção que arrepia. Inclusive, se eu quiser prender suas mãos ou te girar na cama, espero que sua única resposta seja um sorriso safado.</p>
+
+    <h2>4. Ciúmes de zoeira</h2>
+    <p>Tá liberado aquele ciúmes de mentira. Emburrar, fazer charme, dar apelido pra quem olhar demais. Desde que no final role abraço apertado e beijo roubado.</p>
+
+    <h2>5. Apelidos e duplos sentidos</h2>
+    <p>Me chama como quiser, desde que tenha um toque sabe kk. Eu também vou criar os meus — e vou soltar do nada, tipo no meio de uma conversa séria ou antes de dormir. Vai entender, né?</p>
+
+    <h2>6. Flertes inesperados</h2>
+    <p>Se eu estiver quieto e te mandar um “imagina a cena que pensei agora”... interprete da pior forma. Ou melhor: da forma mais safada. Aí a gente vê no ao vivo depois.</p>
+
+    <h2>7. Iniciativas perigosas (que eu adoro)</h2>
+    <p>Você tem liberdade total pra fazer suas maluquices com correntinhas, amarrações, joguinhos que começam como provocação. Eu? Eu só vou obedecer. E depois revidar.</p>
+
+    <h2>8. Suspense e joguinhos</h2>
+    <p>Fingir que não entendeu, sumir só pra me deixar ansioso, deixar uma mensagem no ar... tudo isso mantém o clima. Mas que seja um suspense gostoso, daquele que explode quando a gente se vê.</p>
+
+    <h2>9. Roubos e descontrole emocional</h2>
+    <p>Tá autorizado me roubar beijo mesmo eu evitando no momento kkk, invadir meu abraço ou simplesmente me jogar na cama. Se eu fizer isso contigo também, só aceita. A culpa vai ser do contrato (ou não).</p>
+
+    <h2>10. Exclusividade das loucuras</h2>
+    <p>Essas maluquices são só nossas. Só a gente sabe a intensidade que rola.</p>
+
+    <p style="margin-top: 30px;">
+      Não existe “não sei”. Só existe um botão. E ele decide se você quer sentir tudo isso… agora.
+    </p>
+
+    <p style="margin-top: 40px; font-size: 0.95rem; color: #ccc; text-align: center;">
+      <strong>Validade:</strong> até 31/12/2025<br>
+      Este contrato poderá ser alterado, revogado ou renovado por vontade mútua das partes envolvidas. Toda mudança será acompanhada de novas cláusulas safadas.
+    </p>
+
+    <div style="text-align: center;">
+      <button class="accept-btn" onclick="aceitarContrato()">Aceitar e se entregar</button>
+      <div class="accepted-text" id="msgAceito">Contrato selado. Aguarde... seus desejos serão atendidos.</div>
+    </div>
+  </div>
+
+  <script>
+    function aceitarContrato() {
+      document.getElementById("msgAceito").style.display = "block";
+    }
+  </script>
+</body>
+</html>
