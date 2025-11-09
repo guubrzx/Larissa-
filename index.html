@@ -1,299 +1,55 @@
-<!DOCTYPE html>  
-<html lang="pt-BR">  
-<head>  
-  <meta charset="UTF-8" />  
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>  
-  <title>Você em palavras</title>  
-  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">  
-  <style>  
-    :root {  
-      --verde-claro: #a2d9a2;  
-      --roxo-escuro: #4c1d95;  
-      --branco: #ffffff;  
-      --sombra: rgba(0, 0, 0, 0.4);  
-    }  
-  
-.emoji {  
-  font-size: 22px;  
-  margin-right: 5px;  
-  font-family: "Segoe UI Emoji", "Apple Color Emoji", sans-serif;  
-}  
-  
-  
-    * {  
-      margin: 0;  
-      padding: 0;  
-      box-sizing: border-box;  
-    }  
-  
-    body {  
-      font-family: 'Montserrat', sans-serif;  
-      background: linear-gradient(135deg, var(--roxo-escuro), #1e1e2f);  
-      color: var(--branco);  
-      display: flex;  
-      justify-content: center;  
-      align-items: center;  
-      padding: 2rem;  
-      min-height: 100vh;  
-      position: relative;  
-      overflow: hidden;  
-    }  
-  
-    .imagem-inicial {  
-      position: absolute;  
-      inset: 0;  
-      width: 100%;  
-      height: 100%;  
-      object-fit: cover;  
-      z-index: -1;  
-      opacity: 0.3;  
-      filter: blur(2px);  
-    }  
-  
-    main {  
-      width: 100%;  
-      max-width: 700px;  
-    }  
-  
-    .carta {  
-      background: rgba(255, 255, 255, 0.05);  
-      border: 2px solid var(--verde-claro);  
-      border-radius: 20px;  
-      padding: 3rem 2rem;  
-      text-align: center;  
-      backdrop-filter: blur(12px);  
-      box-shadow: 0 0 20px rgba(162, 217, 162, 0.2);  
-    }  
-  
-    .carta h2 {  
-      font-family: 'Great Vibes', cursive;  
-      font-size: 2.5rem;  
-      color: var(--verde-claro);  
-      margin-bottom: 2rem;  
-    }  
-  
-    .abrir-btn {  
-      background: var(--verde-claro);  
-      color: #1e1e2f;  
-      border: none;  
-      padding: 0.9rem 2rem;  
-      font-size: 1rem;  
-      font-weight: 600;  
-      border-radius: 50px;  
-      cursor: pointer;  
-      transition: all 0.3s ease;  
-    }  
-  
-    .abrir-btn:hover {  
-      background: #8ccf8c;  
-    }  
-  
-    .poema-container {  
-      display: none;  
-      padding: 2rem 1rem;  
-      background: rgba(255, 255, 255, 0.05);  
-      border-radius: 20px;  
-      backdrop-filter: blur(10px);  
-      box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);  
-    }  
-  
-    .poema-container h1 {  
-      font-family: 'Great Vibes', cursive;  
-      font-size: 2.2rem;  
-      text-align: center;  
-      margin-bottom: 1.5rem;  
-      color: var(--verde-claro);  
-      text-shadow: 0 1px 3px var(--sombra);  
-    }  
-  
-    section {  
-  max-height: 80vh;  
-  overflow-y: scroll;  
-  padding-right: 1rem;  
-    }  
-  
-    section p {  
-      opacity: 0;  
-      transform: translateY(20px);  
-      transition: opacity 0.5s ease, transform 0.5s ease;  
-      margin-bottom: 1.2rem;  
-      line-height: 1.6;  
-      font-size: 1rem;  
-      pointer-events: none;  
-    }  
-  
-    section p.visivel {  
-      opacity: 1;  
-      transform: translateY(0);  
-      pointer-events: auto;  
-    }  
-.ps {  
-  opacity: 0;  
-  transform: translateY(20px);  
-  transition: opacity 0.5s ease, transform 0.5s ease;  
-}  
-  
-.ps.visivel {  
-  opacity: 1;  
-  trsection {  
-  max-height: 80vh;  
-  overflow-y: scroll;  
-  padding-right: 1rem;  
-  }ansform: translateY(0);  
-}  
-    @media (max-width: 600px) {  
-      .carta h2 {  
-        font-size: 2rem;  
-      }  
-  
-      .poema-container h1 {  
-        font-size: 1.8rem;  
-      }  
-    }  
-@keyframes flutuarCoração {  
-  0% {  
-    transform: translateY(0) rotate(0deg);  
-    opacity: 1;  
-  }  
-  100% {  
-    transform: translateY(-100vh) rotate(360deg);  
-    opacity: 0;  
-  }  
-}  
-  
-.coracao {  
-  position: absolute;  
-  font-size: 2rem;  
-  color: #ff6b81;  
-  animation: flutuarCoração 10s linear infinite;  
-}  
-  
-.coracao:nth-child(odd) {  
-  animation-duration: 12s;  
-}  
-  
-.coracao:nth-child(even) {  
-  animation-duration: 8s;  
-}  
-  
-@media (max-width: 600px) {  
-  .coracao {  
-    font-size: 1.5rem;  
-  }  
-}  
-.aviso-deslizar {  
-  font-size: 1.2rem;  
-  color: var(--verde-claro);  
-  text-align: center;  
-  margin-bottom: 1rem;  
-  font-weight: 600;  
-  text-shadow: 0 1px 3px var(--sombra);  
-}  
-  
-.seta {  
-  font-size: 2rem;  
-  display: inline-block;  
-  animation: moverSeta 1s infinite;  
-}  
-  
-@keyframes moverSeta {  
-  0% {  
-    transform: translateY(0);  
-  }  
-  50% {  
-    transform: translateY(10px);  
-  }  
-  100% {  
-    transform: translateY(0);  
-  }  
-}  
-    section p.visivel {  
-  opacity: 1 !important;  
-  transform: translateY(0) !important;  
-  pointer-events: auto !important;  
-    }  
-  </style>  
-</head>  
-<body>  
-<div class="coracao" style="top: 10%; left: 30%;">❤️</div>  
-<div class="coracao" style="top: 25%; left: 70%;">❤️</div>  
-<div class="coracao" style="top: 50%; left: 20%;">❤️</div>  
-<div class="coracao" style="top: 60%; left: 50%;">❤️</div>  
-<div class="coracao" style="top: 80%; left: 80%;">❤️</div>  
-  <img src="https://i.imgur.com/4UQ3hJm.png" alt="Imagem de fundo" class="imagem-inicial">  
-  <main>  
-    <div class="carta" id="carta">  
-      <h2>Tem algo que eu queria que você lesse...</h2>  
-      <button class="abrir-btn" onclick="abrirCarta()">Abrir</button>  
-    </div>  
-  
-    <div class="poema-container" id="poema">  
-      <h1>Você em palavras</h1>  
-      <section>  
-        <div id="parte1">  
-   
-<div class="aviso-deslizar">  
-  <p>Deslize para ler mais <span class="seta">&#8595;</span></p>  
-</div>  
-  <p>Tem algo em você que acalma, mesmo quando tudo ao redor parece um caos. É o jeito como fala, como sorri, como olha. Você tem essa aura leve e ao mesmo tempo tão forte, como se conseguisse, sem perceber, mudar o dia de alguém só com a tua presença.</p>  
-  
-  <p>Sabe aquelas pessoas que são difíceis de esquecer? Então… você é exatamente isso. Mas o mais bonito é que não é por grandes gestos, é pelos pequenos. Pelo seu jeitinho de cuidar, de provocar, de se preocupar mesmo sem dizer. Pela forma como seu nome aparece na notificação e, por um instante, tudo parece melhor.</p>  
-  
-  <p>Você tem uma mistura única de doçura com firmeza. Uma calma que chega junto de uma personalidade forte, marcante, impossível de ignorar. Dá vontade de te ouvir por horas, mesmo que seja só sobre coisas bobas — porque até nas bobagens você é interessante.</p>  
-  
-  <p>E aí entra outro ponto… você é linda. De verdade. Daquelas que hipnotiza. Teus olhos, meu Deus… eles brilham de um jeito que parece que o mundo inteiro mora dentro deles. Um brilho que não se explica, só se sente. Quando você sorri com os olhos — e você faz isso sem nem notar — parece que tudo ao redor para.</p>  
-  
-  <p>Seu sorriso então… é outro universo. Tem luz, tem verdade, tem aquele calorzinho que acerta o peito. Um sorriso teu vale o dia inteiro. E não é só o sorriso — teu rosto todo tem uma delicadeza que encanta. A pele, seu cabelo, até a forma como você vira o rosto quando ri… tudo em você parece feito com carinho.</p>  
-  
-  <p>E mesmo com toda essa beleza por fora, o que mais me fascina é o que tem por dentro. Tua inteligência, tua sensibilidade, teu senso de justiça. Você tem atitude, tem opinião, e ainda assim consegue ser leve, fofa e carismática. Tem gente que tenta ser tudo isso e falha. Você é tudo isso sem esforço.</p>  
-  
-  <p>Tem uma energia em você que atrai, que acolhe, que faz querer estar perto. Você é linda sim, mas não só de aparência — você é linda por inteiro. E se você se olhasse com os meus olhos, nem teria coragem de duvidar disso nem por um segundo.</p>  
-  
-  <p>Por isso, se algum dia o mundo pesar, se as inseguranças baterem, volta aqui. Lê isso de novo. Porque você é muito mais do que imagina. É alguém que encanta só por ser quem é. É alguém que transforma só com um olhar. E eu sou só mais um que teve a sorte de te notar… e não conseguir mais parar de notar.</p>  
-  
-  <p class="assinatura">Com carinho, orgulho e esse sorriso bobo que você me faz ter só de pensar em ti…<br>  
-  Teu Schissl.</p>  
-            
-  <p class="ps">Ps: você é linda, irresistível e completamente única. Nunca esquece disso, tá?<br>  
-  Te admiro demais — por fora, por dentro e por inteiro.</p>  
-  
-  <p class="visivel">Te cuida, coisa linda<br>🌹✨🧡</p>  
-  
-  
-      </section>  
-    </div>  
-  </main>  
-  
-  <script>  
-  function abrirCarta() {  
-    document.getElementById("carta").style.display = "none";  
-    const poema = document.getElementById("poema");  
-    poema.style.display = "block";  
-  
-    // Aciona a função para tornar visíveis os parágrafos que já estão na tela  
-    const container = poema.querySelector("section");  
-      
-    const atualizarVisibilidade = () => {  
-      const containerTop = container.scrollTop;  
-      const containerBottom = containerTop + container.clientHeight;  
-      const paragrafos = [...container.querySelectorAll("p, .ps")]; // Incluindo os .ps  
-  
-      paragrafos.forEach(p => {  
-        const pTop = p.offsetTop;  
-        const pBottom = pTop + p.offsetHeight;  
-  
-        if (pBottom > containerTop && pTop < containerBottom) {  
-          p.classList.add("visivel");  
-        } else {  
-          p.classList.remove("visivel");  
-        }  
-      });  
-    };  
-  
-    container.addEventListener("scroll", atualizarVisibilidade);  
-    atualizarVisibilidade();  
-  }  
-</script>  
-</body>  
-  </html>
-  
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Aquilo Que Um Dia Foi...</title>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABmJLR0QA/wD/AP+gvaeTAAAAu0lEQVQ4jWPkQ2U4c/q3wQdGBgYGiZ1YWFhYGP8z/8/AwMTAA+YDAwMDg/9gYBgZGA3D+j/z////N8O/N7i2tqZwA////X///t8y+M/AwMDAyPDvBwZGBiYyA0PDcO3/R6P/r0x//y+Dfwb//5/h3xubGZgygTj/w3F6F8O/N7+///7/l63////7/1+mQxGBgYGBI8K/N/w3Bf////+3QxHw4D8DBQYGhv9n/L8dGRkYGAEAEQO7i4N8lV4AAAAASUVORK5CYII=">
+</head>
+<body>
+    <div class="flutuador" style="top: 15%; left: 80%; animation-delay: 1s;">🧡</div>
+    <div class="flutuador" style="top: 40%; left: 20%; animation-delay: 4s;">✨</div>
+    <div class="flutuador" style="top: 70%; left: 60%; animation-delay: 2s;">🌹</div>
+    <div class="flutuador" style="top: 85%; left: 5%; animation-delay: 6s;">🧡</div>
+    
+    <main>
+        <header class="pre-content-container" id="pre-content-container">
+            <div class="pre-content" id="pre-content">
+                <i class="emoji envelope-icon">💌</i>
+                <h1 class="title-sad">"Eu Guardei Isso, Mesmo Sabendo Que Não É Mais Meu"</h1>
+                <p class="subtitle-sad">Uma lembrança do que eu queria que você soubesse.</p>
+                <button class="open-btn" id="open-btn">Abrir a Lembrança</button>
+            </div>
+        </header>
+
+        <div class="poema-view" id="poema-view">
+            <h1 class="poema-title">Você em palavras (e o que restou delas)</h1>
+            <section class="poema-scroll-container">
+                <p class="poema-warning">
+                    Deslize para reviver a história... <span class="arrow-down">&#8595;</span>
+                </p>
+                <div class="poema-content" id="poema-content">
+                    <p data-line="1">Tem algo em você que acalma, mesmo quando tudo ao redor parece um caos. É o jeito como fala, como sorri, como olha. Você tem essa aura leve e ao mesmo tempo tão forte, como se conseguisse, sem perceber, mudar o dia de alguém só com a tua presença.</p>
+                    <p data-line="2">Sabe aquelas pessoas que são difíceis de esquecer? Então… você é exatamente isso. Mas o mais bonito é que não é por grandes gestos, é pelos pequenos. Pelo seu jeitinho de cuidar, de provocar, de se preocupar mesmo sem dizer. Pela forma como seu nome aparece na notificação e, por um instante, tudo parece melhor.</p>
+                    <p data-line="3">Você tem uma mistura única de doçura com firmeza. Uma calma que chega junto de uma personalidade forte, marcante, impossível de ignorar. Dá vontade de te ouvir por horas, mesmo que seja só sobre coisas bobas — porque até nas bobagens você é interessante.</p>
+                    <p data-line="4">E aí entra outro ponto… você é linda. De verdade. Daquelas que hipnotiza. Teus olhos, meu Deus… eles brilham de um jeito que parece que o mundo inteiro mora dentro deles. Um brilho que não se explica, só se sente. Quando você sorri com os olhos — e você faz isso sem nem notar — parece que tudo ao redor para.</p>
+                    <p data-line="5">Seu sorriso então… é outro universo. Tem luz, tem verdade, tem aquele calorzinho que acerta o peito. Um sorriso teu vale o dia inteiro. E não é só o sorriso — teu rosto todo tem uma delicadeza que encanta. A pele, seu cabelo, até a forma como você vira o rosto quando ri… tudo em você parece feito com carinho.</p>
+                    <p data-line="6">E mesmo com toda essa beleza por fora, o que mais me fascina é o que tem por dentro. Tua inteligência, tua sensibilidade, teu senso de justiça. Você tem atitude, tem opinião, e ainda assim consegue ser leve, fofa e carismática. Tem gente que tenta ser tudo isso e falha. Você é tudo isso sem esforço.</p>
+                    <p data-line="7">Tem uma energia em você que atrai, que acolhe, que faz querer estar perto. Você é linda sim, mas não só de aparência — você é linda por inteiro. E se você se olhasse com os meus olhos, nem teria coragem de duvidar disso nem por um segundo.</p>
+                    <p data-line="8">Por isso, se algum dia o mundo pesar, se as inseguranças baterem, volta aqui. Lê isso de novo. Porque você é muito mais do que imagina. É alguém que encanta só por ser quem é. É alguém que transforma só com um olhar. E eu sou só mais um que teve a sorte de te notar… e não conseguir mais parar de notar.</p>
+                    
+                    <p class="assinatura" data-line="9">Com carinho, orgulho e esse sorriso bobo que você me faz ter só de pensar em ti…<br>Teu Schissl.</p>  
+                    
+                    <p class="ps-final" data-line="10">Ps: você é linda, irresistível e completamente única. Nunca esquece disso, tá?<br>Te admiro demais — por fora, por dentro e por inteiro.</p>
+                    
+                    <p class="final-line" data-line="11">Te cuida, coisa linda<br>🌹✨🧡</p>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script src="js/app.js"></script>
+</body>
+</html>
