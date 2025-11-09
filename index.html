@@ -1,55 +1,623 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Aquilo Que Um Dia Foi...</title>
-    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles/main.css">
-    <link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABmJLR0QA/wD/AP+gvaeTAAAAu0lEQVQ4jWPkQ2U4c/q3wQdGBgYGiZ1YWFhYGP8z/8/AwMTAA+YDAwMDg/9gYBgZGA3D+j/z////N8O/N7i2tqZwA////X///t8y+M/AwMDAyPDvBwZGBiYyA0PDcO3/R6P/r0x//y+Dfwb//5/h3xubGZgygTj/w3F6F8O/N7+///7/l63////7/1+mQxGBgYGBI8K/N/w3Bf////+3QxHw4D8DBQYGhv9n/L8dGRkYGAEAEQO7i4N8lV4AAAAASUVORK5CYII=">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Memórias que permanecem</title>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:wght@400;600;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --verde-claro: #a2d9a2;
+      --verde-suave: #8ccf8c;
+      --roxo-escuro: #4c1d95;
+      --roxo-medio: #6d28d9;
+      --cinza-escuro: #1e1e2f;
+      --cinza-medio: #2d2d44;
+      --branco: #ffffff;
+      --branco-suave: rgba(255, 255, 255, 0.95);
+      --sombra: rgba(0, 0, 0, 0.4);
+      --sombra-leve: rgba(0, 0, 0, 0.15);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: linear-gradient(135deg, var(--roxo-escuro) 0%, #1e1e2f 50%, #2d1b4e 100%);
+      color: var(--branco);
+      min-height: 100vh;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* Partículas de fundo */
+    .particulas {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .particula {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background: var(--verde-claro);
+      border-radius: 50%;
+      opacity: 0.3;
+      animation: flutuar var(--duracao) infinite ease-in-out;
+    }
+
+    @keyframes flutuar {
+      0%, 100% { transform: translateY(0) translateX(0); opacity: 0.3; }
+      50% { transform: translateY(-20px) translateX(10px); opacity: 0.6; }
+    }
+
+    /* Imagem de fundo com overlay */
+    .fundo-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .imagem-inicial {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.15;
+      filter: blur(3px) grayscale(30%);
+    }
+
+    .overlay-gradiente {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, 
+        rgba(76, 29, 149, 0.7) 0%, 
+        rgba(30, 30, 47, 0.85) 50%, 
+        rgba(45, 27, 78, 0.7) 100%);
+    }
+
+    /* Container principal */
+    main {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 2rem;
+    }
+
+    /* Carta inicial - Tela de entrada */
+    .carta-wrapper {
+      width: 100%;
+      max-width: 650px;
+      perspective: 1000px;
+    }
+
+    .carta {
+      background: rgba(255, 255, 255, 0.03);
+      border: 2px solid rgba(162, 217, 162, 0.3);
+      border-radius: 30px;
+      padding: 4rem 2.5rem;
+      text-align: center;
+      backdrop-filter: blur(20px);
+      box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.3),
+        0 0 60px rgba(162, 217, 162, 0.1),
+        inset 0 0 60px rgba(255, 255, 255, 0.02);
+      position: relative;
+      overflow: hidden;
+      transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .carta::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(162, 217, 162, 0.1) 0%, transparent 70%);
+      animation: pulsar 8s ease-in-out infinite;
+    }
+
+    @keyframes pulsar {
+      0%, 100% { transform: scale(1) rotate(0deg); opacity: 0.5; }
+      50% { transform: scale(1.2) rotate(180deg); opacity: 0.8; }
+    }
+
+    .carta-conteudo {
+      position: relative;
+      z-index: 1;
+    }
+
+    .icone-envelope {
+      font-size: 4rem;
+      margin-bottom: 1.5rem;
+      animation: balançar 3s ease-in-out infinite;
+      filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+    }
+
+    @keyframes balançar {
+      0%, 100% { transform: translateY(0) rotate(-5deg); }
+      50% { transform: translateY(-10px) rotate(5deg); }
+    }
+
+    .carta h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.2rem;
+      font-weight: 600;
+      color: var(--verde-claro);
+      margin-bottom: 1.5rem;
+      line-height: 1.4;
+      text-shadow: 0 2px 12px rgba(162, 217, 162, 0.4);
+    }
+
+    .carta-texto {
+      font-size: 1.05rem;
+      line-height: 1.8;
+      color: rgba(255, 255, 255, 0.85);
+      margin-bottom: 1rem;
+      font-weight: 300;
+      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+    }
+
+    .carta-texto.destaque {
+      font-size: 0.95rem;
+      color: rgba(255, 255, 255, 0.7);
+      font-style: italic;
+      margin-top: 1.5rem;
+      margin-bottom: 2.5rem;
+      padding: 1rem;
+      border-left: 3px solid rgba(162, 217, 162, 0.4);
+      background: rgba(255, 255, 255, 0.02);
+      border-radius: 0 10px 10px 0;
+    }
+
+    .abrir-btn {
+      background: linear-gradient(135deg, var(--verde-claro) 0%, var(--verde-suave) 100%);
+      color: var(--cinza-escuro);
+      border: none;
+      padding: 1rem 3rem;
+      font-size: 1.1rem;
+      font-weight: 600;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 4px 20px rgba(162, 217, 162, 0.3);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .abrir-btn::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.3);
+      transform: translate(-50%, -50%);
+      transition: width 0.6s, height 0.6s;
+    }
+
+    .abrir-btn:hover::before {
+      width: 300px;
+      height: 300px;
+    }
+
+    .abrir-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 30px rgba(162, 217, 162, 0.5);
+    }
+
+    .abrir-btn:active {
+      transform: translateY(-1px);
+    }
+
+    /* Container do poema */
+    .poema-container {
+      display: none;
+      width: 100%;
+      max-width: 800px;
+      animation: surgir 1s ease-out forwards;
+    }
+
+    @keyframes surgir {
+      from { opacity: 0; transform: translateY(30px) scale(0.95); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    .poema-header {
+      text-align: center;
+      padding: 2rem 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .poema-container h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 3rem;
+      font-weight: 700;
+      color: var(--verde-claro);
+      text-shadow: 0 2px 20px rgba(162, 217, 162, 0.5);
+      margin-bottom: 0.5rem;
+      letter-spacing: 1px;
+    }
+
+    .poema-subtitulo {
+      font-family: 'Great Vibes', cursive;
+      font-size: 1.8rem;
+      color: rgba(255, 255, 255, 0.7);
+      margin-top: 0.5rem;
+    }
+
+    /* Área de scroll do conteúdo */
+    .poema-scroll {
+      background: rgba(255, 255, 255, 0.04);
+      border: 2px solid rgba(162, 217, 162, 0.25);
+      border-radius: 25px;
+      padding: 3rem 2.5rem;
+      backdrop-filter: blur(15px);
+      box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.3),
+        inset 0 0 60px rgba(255, 255, 255, 0.02);
+      position: relative;
+    }
+
+    section {
+      max-height: 65vh;
+      overflow-y: auto;
+      padding-right: 1rem;
+      scroll-behavior: smooth;
+    }
+
+    /* Scrollbar personalizada */
+    section::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    section::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 10px;
+    }
+
+    section::-webkit-scrollbar-thumb {
+      background: var(--verde-claro);
+      border-radius: 10px;
+      transition: background 0.3s;
+    }
+
+    section::-webkit-scrollbar-thumb:hover {
+      background: var(--verde-suave);
+    }
+
+    /* Aviso de deslizar */
+    .aviso-deslizar {
+      text-align: center;
+      margin-bottom: 2rem;
+      padding: 1rem;
+      background: rgba(162, 217, 162, 0.1);
+      border-radius: 15px;
+      border: 1px solid rgba(162, 217, 162, 0.3);
+    }
+
+    .aviso-deslizar p {
+      font-size: 1.1rem;
+      color: var(--verde-claro);
+      font-weight: 600;
+      margin: 0;
+      opacity: 1 !important;
+      transform: none !important;
+    }
+
+    .seta {
+      display: inline-block;
+      font-size: 1.5rem;
+      margin-left: 0.5rem;
+      animation: moverSeta 1.5s infinite ease-in-out;
+    }
+
+    @keyframes moverSeta {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(8px); }
+    }
+
+    /* Parágrafos do poema */
+    section p {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+      margin-bottom: 1.8rem;
+      line-height: 1.9;
+      font-size: 1.08rem;
+      color: rgba(255, 255, 255, 0.9);
+      font-weight: 300;
+      text-align: justify;
+      pointer-events: none;
+      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    }
+
+    section p.visivel {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+
+    /* Assinatura */
+    .assinatura {
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 2px solid rgba(162, 217, 162, 0.3);
+      font-family: 'Great Vibes', cursive;
+      font-size: 1.4rem;
+      text-align: center;
+      color: var(--verde-claro);
+      font-weight: 400;
+    }
+
+    /* PS */
+    .ps {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+      margin-top: 2rem;
+      padding: 1.5rem;
+      background: rgba(162, 217, 162, 0.08);
+      border-left: 4px solid var(--verde-claro);
+      border-radius: 0 15px 15px 0;
+      font-style: italic;
+      font-size: 1rem;
+      color: rgba(255, 255, 255, 0.85);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .ps.visivel {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Mensagem final */
+    .mensagem-final {
+      text-align: center;
+      margin-top: 2.5rem;
+      padding: 1.5rem;
+      background: linear-gradient(135deg, rgba(162, 217, 162, 0.15) 0%, rgba(162, 217, 162, 0.05) 100%);
+      border-radius: 20px;
+      border: 2px solid rgba(162, 217, 162, 0.3);
+      font-size: 1.2rem;
+      color: var(--verde-claro);
+      font-weight: 400;
+      line-height: 1.6;
+    }
+
+    .emoji {
+      font-size: 1.5rem;
+      margin: 0 0.3rem;
+    }
+
+    /* Corações flutuantes */
+    @keyframes flutuarCoracao {
+      0% {
+        transform: translateY(0) rotate(0deg) scale(1);
+        opacity: 0.6;
+      }
+      50% {
+        opacity: 0.8;
+        transform: translateY(-50vh) rotate(180deg) scale(1.2);
+      }
+      100% {
+        transform: translateY(-100vh) rotate(360deg) scale(0.8);
+        opacity: 0;
+      }
+    }
+
+    .coracao {
+      position: fixed;
+      font-size: 2rem;
+      color: #ff6b81;
+      z-index: 0;
+      pointer-events: none;
+      animation: flutuarCoracao linear infinite;
+      filter: drop-shadow(0 0 10px rgba(255, 107, 129, 0.5));
+    }
+
+    .coracao:nth-child(1) { animation-duration: 15s; animation-delay: 0s; }
+    .coracao:nth-child(2) { animation-duration: 12s; animation-delay: 2s; }
+    .coracao:nth-child(3) { animation-duration: 18s; animation-delay: 4s; }
+    .coracao:nth-child(4) { animation-duration: 14s; animation-delay: 6s; }
+    .coracao:nth-child(5) { animation-duration: 16s; animation-delay: 8s; }
+
+    /* Responsividade */
+    @media (max-width: 768px) {
+      main { padding: 1.5rem; }
+      .carta { padding: 3rem 2rem; }
+      .carta h2 { font-size: 1.8rem; }
+      .carta-texto { font-size: 1rem; }
+      .poema-container h1 { font-size: 2.2rem; }
+      .poema-subtitulo { font-size: 1.4rem; }
+      .poema-scroll { padding: 2rem 1.5rem; }
+      section { max-height: 70vh; }
+      section p { font-size: 1rem; }
+      .abrir-btn { padding: 0.9rem 2.5rem; font-size: 1rem; }
+    }
+
+    @media (max-width: 480px) {
+      .carta h2 { font-size: 1.5rem; }
+      .poema-container h1 { font-size: 1.8rem; }
+      .icone-envelope { font-size: 3rem; }
+      .coracao { font-size: 1.5rem; }
+    }
+
+    /* Animação de fade out para carta */
+    .carta.fadeout {
+      opacity: 0;
+      transform: scale(0.9);
+      pointer-events: none;
+    }
+  </style>
 </head>
 <body>
-    <div class="flutuador" style="top: 15%; left: 80%; animation-delay: 1s;">🧡</div>
-    <div class="flutuador" style="top: 40%; left: 20%; animation-delay: 4s;">✨</div>
-    <div class="flutuador" style="top: 70%; left: 60%; animation-delay: 2s;">🌹</div>
-    <div class="flutuador" style="top: 85%; left: 5%; animation-delay: 6s;">🧡</div>
-    
-    <main>
-        <header class="pre-content-container" id="pre-content-container">
-            <div class="pre-content" id="pre-content">
-                <i class="emoji envelope-icon">💌</i>
-                <h1 class="title-sad">"Eu Guardei Isso, Mesmo Sabendo Que Não É Mais Meu"</h1>
-                <p class="subtitle-sad">Uma lembrança do que eu queria que você soubesse.</p>
-                <button class="open-btn" id="open-btn">Abrir a Lembrança</button>
-            </div>
-        </header>
+  <!-- Partículas de fundo -->
+  <div class="particulas" id="particulas"></div>
 
-        <div class="poema-view" id="poema-view">
-            <h1 class="poema-title">Você em palavras (e o que restou delas)</h1>
-            <section class="poema-scroll-container">
-                <p class="poema-warning">
-                    Deslize para reviver a história... <span class="arrow-down">&#8595;</span>
-                </p>
-                <div class="poema-content" id="poema-content">
-                    <p data-line="1">Tem algo em você que acalma, mesmo quando tudo ao redor parece um caos. É o jeito como fala, como sorri, como olha. Você tem essa aura leve e ao mesmo tempo tão forte, como se conseguisse, sem perceber, mudar o dia de alguém só com a tua presença.</p>
-                    <p data-line="2">Sabe aquelas pessoas que são difíceis de esquecer? Então… você é exatamente isso. Mas o mais bonito é que não é por grandes gestos, é pelos pequenos. Pelo seu jeitinho de cuidar, de provocar, de se preocupar mesmo sem dizer. Pela forma como seu nome aparece na notificação e, por um instante, tudo parece melhor.</p>
-                    <p data-line="3">Você tem uma mistura única de doçura com firmeza. Uma calma que chega junto de uma personalidade forte, marcante, impossível de ignorar. Dá vontade de te ouvir por horas, mesmo que seja só sobre coisas bobas — porque até nas bobagens você é interessante.</p>
-                    <p data-line="4">E aí entra outro ponto… você é linda. De verdade. Daquelas que hipnotiza. Teus olhos, meu Deus… eles brilham de um jeito que parece que o mundo inteiro mora dentro deles. Um brilho que não se explica, só se sente. Quando você sorri com os olhos — e você faz isso sem nem notar — parece que tudo ao redor para.</p>
-                    <p data-line="5">Seu sorriso então… é outro universo. Tem luz, tem verdade, tem aquele calorzinho que acerta o peito. Um sorriso teu vale o dia inteiro. E não é só o sorriso — teu rosto todo tem uma delicadeza que encanta. A pele, seu cabelo, até a forma como você vira o rosto quando ri… tudo em você parece feito com carinho.</p>
-                    <p data-line="6">E mesmo com toda essa beleza por fora, o que mais me fascina é o que tem por dentro. Tua inteligência, tua sensibilidade, teu senso de justiça. Você tem atitude, tem opinião, e ainda assim consegue ser leve, fofa e carismática. Tem gente que tenta ser tudo isso e falha. Você é tudo isso sem esforço.</p>
-                    <p data-line="7">Tem uma energia em você que atrai, que acolhe, que faz querer estar perto. Você é linda sim, mas não só de aparência — você é linda por inteiro. E se você se olhasse com os meus olhos, nem teria coragem de duvidar disso nem por um segundo.</p>
-                    <p data-line="8">Por isso, se algum dia o mundo pesar, se as inseguranças baterem, volta aqui. Lê isso de novo. Porque você é muito mais do que imagina. É alguém que encanta só por ser quem é. É alguém que transforma só com um olhar. E eu sou só mais um que teve a sorte de te notar… e não conseguir mais parar de notar.</p>
-                    
-                    <p class="assinatura" data-line="9">Com carinho, orgulho e esse sorriso bobo que você me faz ter só de pensar em ti…<br>Teu Schissl.</p>  
-                    
-                    <p class="ps-final" data-line="10">Ps: você é linda, irresistível e completamente única. Nunca esquece disso, tá?<br>Te admiro demais — por fora, por dentro e por inteiro.</p>
-                    
-                    <p class="final-line" data-line="11">Te cuida, coisa linda<br>🌹✨🧡</p>
-                </div>
-            </section>
+  <!-- Corações flutuantes -->
+  <div class="coracao" style="top: 100%; left: 15%;">❤️</div>
+  <div class="coracao" style="top: 100%; left: 40%;">❤️</div>
+  <div class="coracao" style="top: 100%; left: 65%;">❤️</div>
+  <div class="coracao" style="top: 100%; left: 85%;">❤️</div>
+  <div class="coracao" style="top: 100%; left: 50%;">❤️</div>
+
+  <!-- Fundo com overlay -->
+  <div class="fundo-overlay">
+    <img src="https://i.imgur.com/4UQ3hJm.png" alt="Memórias" class="imagem-inicial">
+    <div class="overlay-gradiente"></div>
+  </div>
+
+  <!-- Conteúdo principal -->
+  <main>
+    <!-- Carta inicial -->
+    <div class="carta-wrapper">
+      <div class="carta" id="carta">
+        <div class="carta-conteudo">
+          <div class="icone-envelope">💌</div>
+          <h2>Uma mensagem que permanece...</h2>
+          <p class="carta-texto">
+            Sei que nossos caminhos se separaram, que o "nós" virou memória.
+            Mas tem algo que escrevi quando tudo ainda era real, quando cada palavra
+            saía do coração sem filtros.
+          </p>
+          <p class="carta-texto">
+            Mantive isso guardado, não por apego ao que passou, mas porque 
+            era verdade naquele momento — e verdades não desaparecem só porque 
+            o tempo mudou.
+          </p>
+          <p class="carta-texto destaque">
+            Talvez você nunca mais leia isso. Talvez leia e nada sinta. 
+            Mas está aqui, do jeito que foi escrito, do jeito que foi sentido.
+            <br><br>
+            Algumas coisas merecem existir, mesmo depois do fim.
+          </p>
+          <button class="abrir-btn" onclick="abrirCarta()">
+            <span style="position: relative; z-index: 1;">Abrir</span>
+          </button>
         </div>
-    </main>
+      </div>
+    </div>
 
-    <script src="js/app.js"></script>
+    <!-- Poema -->
+    <div class="poema-container" id="poema">
+      <div class="poema-header">
+        <h1>Você em palavras</h1>
+        <p class="poema-subtitulo">Como eu te vi, como eu te senti</p>
+      </div>
+
+      <div class="poema-scroll">
+        <section>
+          <div class="aviso-deslizar">
+            <p>Deslize para ler <span class="seta">↓</span></p>
+          </div>
+
+          <p>Tem algo em você que acalma, mesmo quando tudo ao redor parece um caos. É o jeito como fala, como sorri, como olha. Você tem essa aura leve e ao mesmo tempo tão forte, como se conseguisse, sem perceber, mudar o dia de alguém só com a tua presença.</p>
+
+          <p>Sabe aquelas pessoas que são difíceis de esquecer? Então... você é exatamente isso. Mas o mais bonito é que não é por grandes gestos, é pelos pequenos. Pelo seu jeitinho de cuidar, de provocar, de se preocupar mesmo sem dizer. Pela forma como seu nome aparece na notificação e, por um instante, tudo parece melhor.</p>
+
+          <p>Você tem uma mistura única de doçura com firmeza. Uma calma que chega junto de uma personalidade forte, marcante, impossível de ignorar. Dá vontade de te ouvir por horas, mesmo que seja só sobre coisas bobas — porque até nas bobagens você é interessante.</p>
+
+          <p>E aí entra outro ponto... você é linda. De verdade. Daquelas que hipnotiza. Teus olhos, meu Deus... eles brilham de um jeito que parece que o mundo inteiro mora dentro deles. Um brilho que não se explica, só se sente. Quando você sorri com os olhos — e você faz isso sem nem notar — parece que tudo ao redor para.</p>
+
+          <p>Seu sorriso então... é outro universo. Tem luz, tem verdade, tem aquele calorzinho que acerta o peito. Um sorriso teu vale o dia inteiro. E não é só o sorriso — teu rosto todo tem uma delicadeza que encanta. A pele, seu cabelo, até a forma como você vira o rosto quando ri... tudo em você parece feito com carinho.</p>
+
+          <p>E mesmo com toda essa beleza por fora, o que mais me fascina é o que tem por dentro. Tua inteligência, tua sensibilidade, teu senso de justiça. Você tem atitude, tem opinião, e ainda assim consegue ser leve, fofa e carismática. Tem gente que tenta ser tudo isso e falha. Você é tudo isso sem esforço.</p>
+
+          <p>Tem uma energia em você que atrai, que acolhe, que faz querer estar perto. Você é linda sim, mas não só de aparência — você é linda por inteiro. E se você se olhasse com os meus olhos, nem teria coragem de duvidar disso nem por um segundo.</p>
+
+          <p>Por isso, se algum dia o mundo pesar, se as inseguranças baterem, volta aqui. Lê isso de novo. Porque você é muito mais do que imagina. É alguém que encanta só por ser quem é. É alguém que transforma só com um olhar. E eu sou só mais um que teve a sorte de te notar... e não conseguir mais parar de notar.</p>
+
+          <p class="assinatura">
+            Com carinho, orgulho e esse sorriso bobo que você me faz ter só de pensar em ti...<br>
+            Teu Schissl.
+          </p>
+
+          <p class="ps">
+            <strong>Ps:</strong> você é linda, irresistível e completamente única. Nunca esquece disso, tá?<br>
+            Te admiro demais — por fora, por dentro e por inteiro.
+          </p>
+
+          <div class="mensagem-final visivel">
+            Te cuida, coisa linda<br>
+            <span class="emoji">🌹</span>
+            <span class="emoji">✨</span>
+            <span class="emoji">🧡</span>
+          </div>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    // Criar partículas de fundo
+    function criarParticulas() {
+      const container = document.getElementById('particulas');
+      const numParticulas = 50;
+
+      for (let i = 0; i < numParticulas; i++) {
+        const particula = document.createElement('div');
+        particula.className = 'particula';
+        particula.style.left = Math.random() * 100 + '%';
+        particula.style.top = Math.random() * 100 + '%';
+        particula.style.setProperty('--duracao', (Math.random() * 10 + 5) + 's');
+        particula.style.animationDelay = Math.random() * 5 + 's';
+        container.appendChild(particula);
+      }
+    }
+
+    // Abrir carta
+    function abrirCarta() {
+      const carta = document.getElementById("carta");
+      const poema = document.getElementById("poema");
+      
+      carta.classList.add('fadeout');
+      
+      setTimeout(() => {
+        carta.parentElement.style.display = "none";
+        poema.style.display = "block";
+        
+        const container = poema.querySelector("section");
+        atualizarVisibilidade(container);
+        container.addEventListener("scroll", () => atualizarVisibilidade(container));
+      }, 600);
+    }
+
+    // Atualizar visibilidade dos parágrafos
+    function atualizarVisibilidade(container) {
+      const containerTop = container.scrollTop;
+      const containerBottom = containerTop + container.clientHeight;
+      const elementos = container.querySelectorAll("p:not(.visivel), .ps:not(.visivel)");
+
+      elementos.forEach(el => {
+        const elTop = el.offsetTop;
+        const elBottom = elTop + el.offsetHeight;
+
+        if (elBottom > containerTop && elTop < containerBottom + 100) {
+          setTimeout(() => el.classList.add("visivel"), 100);
+        }
+      });
+    }
+
+    // Inicializar
+    window.addEventListener('DOMContentLoaded', () => {
+      criarParticulas();
+    });
+  </script>
 </body>
 </html>
